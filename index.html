@@ -1,0 +1,1048 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>buscajuegos.com - Tienda de Videojuegos</title>
+  <style>
+    /* =========================================
+       ESTILOS GENERALES Y ESTRUCTURA BÁSICA
+       ========================================= */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background-color: #f2f2f2;
+      color: #222222;
+      line-height: 1.5;
+    }
+
+    /* Encabezado superior estilo clásico */
+    header {
+      background-color: #1b2838;
+      color: #ffffff;
+      padding: 16px 20px;
+      border-bottom: 3px solid #2a475e;
+    }
+
+    .header-container {
+      max-width: 1150px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+      color: #ffffff;
+      text-decoration: none;
+    }
+
+    .logo span {
+      color: #66c0f4;
+    }
+
+    /* Barra de navegación y botones superiores */
+    .nav-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn-header {
+      background-color: #2a475e;
+      color: #ffffff;
+      border: 1px solid #417a9b;
+      padding: 8px 14px;
+      font-size: 14px;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+
+    .btn-header:hover {
+      background-color: #3b6382;
+    }
+
+    .btn-cart {
+      background-color: #5c7e10;
+      border-color: #76a115;
+      font-weight: bold;
+    }
+
+    .btn-cart:hover {
+      background-color: #6c9413;
+    }
+
+    /* Barra de búsqueda y filtros */
+    .toolbar {
+      background-color: #ffffff;
+      border-bottom: 1px solid #cccccc;
+      padding: 14px 20px;
+    }
+
+    .toolbar-container {
+      max-width: 1150px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .search-box {
+      display: flex;
+      gap: 6px;
+      flex: 1;
+      min-width: 240px;
+      max-width: 420px;
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: 8px 10px;
+      border: 1px solid #bbbbbb;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+
+    .platform-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .filter-btn {
+      background-color: #e9e9e9;
+      color: #333333;
+      border: 1px solid #cccccc;
+      padding: 7px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+
+    .filter-btn:hover {
+      background-color: #dcdcdc;
+    }
+
+    .filter-btn.active {
+      background-color: #1b2838;
+      color: #ffffff;
+      border-color: #1b2838;
+      font-weight: bold;
+    }
+
+    /* Contenedor principal */
+    main {
+      max-width: 1150px;
+      margin: 24px auto;
+      padding: 0 20px;
+    }
+
+    .section-title {
+      font-size: 20px;
+      margin-bottom: 16px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid #cccccc;
+      color: #1b2838;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .section-title small {
+      font-size: 13px;
+      font-weight: normal;
+      color: #666666;
+    }
+
+    /* =========================================
+       CUADRÍCULA DE VIDEOJUEGOS (TARJETAS)
+       ========================================= */
+    .games-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 20px;
+    }
+
+    .game-card {
+      background-color: #ffffff;
+      border: 1px solid #cccccc;
+      border-radius: 4px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .game-card:hover {
+      border-color: #888888;
+    }
+
+    /* Bloque de portada con imagen local */
+    .game-cover {
+      position: relative;
+      height: 155px;
+      background-color: #222222;
+      border-bottom: 1px solid #cccccc;
+      cursor: pointer;
+      overflow: hidden;
+    }
+
+    .game-cover img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .cover-platform {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background-color: rgba(0, 0, 0, 0.75);
+      color: #ffffff;
+      padding: 3px 8px;
+      font-size: 11px;
+      font-weight: bold;
+      border-radius: 3px;
+    }
+
+    .game-body {
+      padding: 14px;
+      flex: 1;
+    }
+
+    .game-title {
+      font-size: 16px;
+      font-weight: bold;
+      color: #1b2838;
+      margin-bottom: 6px;
+    }
+
+    .game-desc {
+      font-size: 13px;
+      color: #555555;
+      margin-bottom: 12px;
+    }
+
+    .game-footer {
+      padding: 12px 14px;
+      background-color: #f9f9f9;
+      border-top: 1px solid #e0e0e0;
+    }
+
+    .game-price {
+      font-size: 17px;
+      font-weight: bold;
+      color: #2e6b12;
+      margin-bottom: 10px;
+    }
+
+    .card-buttons {
+      display: flex;
+      gap: 8px;
+    }
+
+    .btn {
+      flex: 1;
+      padding: 8px 10px;
+      font-size: 13px;
+      border-radius: 4px;
+      cursor: pointer;
+      text-align: center;
+      border: 1px solid transparent;
+    }
+
+    .btn-details {
+      background-color: #eeeeee;
+      color: #222222;
+      border-color: #bbbbbb;
+    }
+
+    .btn-details:hover {
+      background-color: #e0e0e0;
+    }
+
+    .btn-add {
+      background-color: #1b2838;
+      color: #ffffff;
+      font-weight: bold;
+    }
+
+    .btn-add:hover {
+      background-color: #2a475e;
+    }
+
+    /* Mensaje sin resultados */
+    .empty-message {
+      background-color: #ffffff;
+      border: 1px solid #cccccc;
+      padding: 30px;
+      text-align: center;
+      border-radius: 4px;
+      display: none;
+    }
+
+    /* =========================================
+       VENTANAS EMERGENTES (MODALES SENCILLOS)
+       ========================================= */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.6);
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+
+    .modal-overlay.open {
+      display: flex;
+    }
+
+    .modal-box {
+      background-color: #ffffff;
+      border: 2px solid #444444;
+      border-radius: 5px;
+      width: 100%;
+      max-width: 520px;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .modal-header {
+      background-color: #1b2838;
+      color: #ffffff;
+      padding: 12px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .modal-header h3 {
+      font-size: 17px;
+    }
+
+    .btn-close {
+      background: none;
+      border: none;
+      color: #ffffff;
+      font-size: 20px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .modal-content {
+      padding: 18px;
+      font-size: 14px;
+    }
+
+    .modal-footer {
+      padding: 12px 18px;
+      background-color: #f2f2f2;
+      border-top: 1px solid #cccccc;
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+
+    /* Estilos específicos dentro de los modales */
+    .detail-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0;
+    }
+
+    .detail-table td {
+      padding: 8px;
+      border: 1px solid #dddddd;
+    }
+
+    .detail-table td:first-child {
+      font-weight: bold;
+      background-color: #f7f7f7;
+      width: 35%;
+    }
+
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid #e0e0e0;
+      gap: 10px;
+    }
+
+    .btn-remove {
+      background-color: #c0392b;
+      color: #ffffff;
+      border: none;
+      padding: 5px 9px;
+      font-size: 12px;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+
+    .btn-remove:hover {
+      background-color: #a93226;
+    }
+
+    .cart-total-box {
+      margin-top: 14px;
+      padding: 12px;
+      background-color: #f7f7f7;
+      border: 1px solid #cccccc;
+      text-align: right;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    .form-group {
+      margin-bottom: 12px;
+    }
+
+    .form-group label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 4px;
+      font-size: 13px;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #bbbbbb;
+      border-radius: 4px;
+      font-family: inherit;
+      font-size: 14px;
+    }
+
+    .alert-box {
+      display: none;
+      background-color: #dff0d8;
+      color: #2b542c;
+      border: 1px solid #b2dba1;
+      padding: 10px 14px;
+      margin-bottom: 16px;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+
+    /* Pie de página simple */
+    footer {
+      background-color: #222222;
+      color: #cccccc;
+      text-align: center;
+      padding: 20px;
+      margin-top: 40px;
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==================== ENCABEZADO PRINCIPAL ==================== -->
+  <header>
+    <div class="header-container">
+      <a href="#" class="logo" onclick="resetCatalog(); return false;">
+        buscajuegos<span>.com</span>
+      </a>
+
+      <nav class="nav-actions">
+        <button class="btn-header" onclick="openModal('offersModal')">Ofertas</button>
+        <button class="btn-header" onclick="openModal('loginModal')" id="loginBtn">Iniciar Sesión</button>
+        <button class="btn-header" onclick="openModal('contactModal')">Contacto</button>
+        <button class="btn-header btn-cart" onclick="openCartModal()">
+          Carrito (<span id="cartCount">0</span>)
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ==================== BARRA DE BÚSQUEDA Y FILTROS ==================== -->
+  <section class="toolbar">
+    <div class="toolbar-container">
+      <div class="search-box">
+        <input
+          type="text"
+          id="searchInput"
+          placeholder="Buscar videojuego por nombre..."
+          oninput="filterGames()"
+        />
+      </div>
+
+      <div class="platform-filters" id="filterButtons">
+        <button class="filter-btn active" onclick="setPlatform('Todos', this)">Todos</button>
+        <button class="filter-btn" onclick="setPlatform('PC', this)">PC</button>
+        <button class="filter-btn" onclick="setPlatform('PS5', this)">PS5</button>
+        <button class="filter-btn" onclick="setPlatform('Switch 2', this)">Switch 2</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== CATÁLOGO DE VIDEOJUEGOS ==================== -->
+  <main>
+    <!-- Aviso de acción (cuando se agrega al carrito) -->
+    <div id="statusAlert" class="alert-box"></div>
+
+    <div class="section-title">
+      <span id="catalogHeading">Catálogo de Videojuegos</span>
+      <small id="gamesCounter">Mostrando 10 juegos</small>
+    </div>
+
+    <!-- Cuadrícula donde se insertan los cuadros -->
+    <div class="games-grid" id="gamesGrid"></div>
+
+    <!-- Mensaje si no hay resultados -->
+    <div class="empty-message" id="emptyMessage">
+      <p><strong>No se encontraron videojuegos con ese criterio.</strong></p>
+      <br />
+      <button class="btn btn-details" onclick="resetCatalog()">Ver todos los juegos</button>
+    </div>
+  </main>
+
+  <!-- ==================== PIE DE PÁGINA ==================== -->
+  <footer>
+    <p>&copy; 2026 buscajuegos.com - Tienda Digital de Videojuegos. Todos los derechos reservados.</p>
+  </footer>
+
+  <!-- ==================================================================
+       VENTANA MODAL 1: DETALLES DEL VIDEOJUEGO
+       ================================================================== -->
+  <div class="modal-overlay" id="detailsModal" onclick="closeOnOverlay(event, 'detailsModal')">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 id="detailModalTitle">Ficha del Videojuego</h3>
+        <button class="btn-close" onclick="closeModal('detailsModal')">&times;</button>
+      </div>
+      <div class="modal-content" id="detailModalBody">
+        <!-- Se llena dinámicamente con JavaScript -->
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-details" style="flex: none; padding: 8px 16px;" onclick="closeModal('detailsModal')">Cerrar</button>
+        <button class="btn btn-add" style="flex: none; padding: 8px 16px;" id="detailAddBtn">Agregar al Carrito</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================================================================
+       VENTANA MODAL 2: CARRITO DE COMPRAS
+       ================================================================== -->
+  <div class="modal-overlay" id="cartModal" onclick="closeOnOverlay(event, 'cartModal')">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3>Carrito de Compras</h3>
+        <button class="btn-close" onclick="closeModal('cartModal')">&times;</button>
+      </div>
+      <div class="modal-content">
+        <div id="cartItemsContainer"></div>
+        <div class="cart-total-box" id="cartTotalBox">
+          Total a pagar: $0 MXN
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-details" style="flex: none; padding: 8px 16px;" onclick="closeModal('cartModal')">Seguir viendo</button>
+        <button class="btn btn-add" style="flex: none; padding: 8px 16px; background-color: #5c7e10;" id="checkoutBtn" onclick="finishPurchase()">
+          Finalizar compra
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================================================================
+       VENTANA MODAL 3: OFERTAS DEL DÍA
+       ================================================================== -->
+  <div class="modal-overlay" id="offersModal" onclick="closeOnOverlay(event, 'offersModal')">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3>Ofertas Especiales</h3>
+        <button class="btn-close" onclick="closeModal('offersModal')">&times;</button>
+      </div>
+      <div class="modal-content">
+        <p style="margin-bottom: 12px;">Aprovecha estos descuentos directos en nuestro catálogo:</p>
+        <table class="detail-table">
+          <tr>
+            <td>Resident Evil 4 Remake</td>
+            <td>Antes: $1,199 MXN — <strong>Ahora: $799 MXN</strong></td>
+          </tr>
+          <tr>
+            <td>Elden Ring: Shadow of the Erdtree</td>
+            <td>Antes: $1,299 MXN — <strong>Ahora: $899 MXN</strong></td>
+          </tr>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-add" style="flex: none; padding: 8px 16px;" onclick="closeModal('offersModal')">Entendido</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================================================================
+       VENTANA MODAL 4: INICIO DE SESIÓN BÁSICO
+       ================================================================== -->
+  <div class="modal-overlay" id="loginModal" onclick="closeOnOverlay(event, 'loginModal')">
+    <div class="modal-box" style="max-width: 400px;">
+      <div class="modal-header">
+        <h3>Iniciar Sesión</h3>
+        <button class="btn-close" onclick="closeModal('loginModal')">&times;</button>
+      </div>
+      <form onsubmit="handleLogin(event)">
+        <div class="modal-content">
+          <div class="form-group">
+            <label for="usernameInput">Nombre de usuario:</label>
+            <input type="text" id="usernameInput" required placeholder="Ej. JuanGamer" />
+          </div>
+          <div class="form-group">
+            <label for="passwordInput">Contraseña:</label>
+            <input type="password" id="passwordInput" required placeholder="********" />
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-details" style="flex: none; padding: 8px 14px;" onclick="closeModal('loginModal')">Cancelar</button>
+          <button type="submit" class="btn btn-add" style="flex: none; padding: 8px 14px;">Entrar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ==================================================================
+       VENTANA MODAL 5: CONTACTO Y SOPORTE
+       ================================================================== -->
+  <div class="modal-overlay" id="contactModal" onclick="closeOnOverlay(event, 'contactModal')">
+    <div class="modal-box" style="max-width: 440px;">
+      <div class="modal-header">
+        <h3>Contacto - buscajuegos.com</h3>
+        <button class="btn-close" onclick="closeModal('contactModal')">&times;</button>
+      </div>
+      <form onsubmit="handleContact(event)">
+        <div class="modal-content">
+          <p style="margin-bottom: 12px; color: #555555;">¿Tienes dudas con tu pedido o código digital? Escríbenos:</p>
+          <div class="form-group">
+            <label for="contactEmail">Tu correo electrónico:</label>
+            <input type="email" id="contactEmail" required placeholder="correo@ejemplo.com" />
+          </div>
+          <div class="form-group">
+            <label for="contactMsg">Mensaje:</label>
+            <textarea id="contactMsg" rows="3" required placeholder="Escribe tu consulta aquí..."></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-details" style="flex: none; padding: 8px 14px;" onclick="closeModal('contactModal')">Cerrar</button>
+          <button type="submit" class="btn btn-add" style="flex: none; padding: 8px 14px;">Enviar mensaje</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ==================== JAVASCRIPT PURO ==================== -->
+  <script>
+    // Lista de videojuegos disponibles en la tienda con imágenes locales en img/
+    const games = [
+      {
+        id: 1,
+        title: "Grand Theft Auto VI",
+        platform: "PS5",
+        genre: "Acción / Mundo Abierto",
+        year: "2026",
+        price: 1599,
+        imagen: "img/gta6.jpg",
+        color: "#7a2048",
+        descripcion: "Explora el estado de Leonida y las calles de Vice City en una nueva historia criminal junto a Lucía y su compañero en el mundo abierto más grande de Rockstar Games."
+      },
+      {
+        id: 2,
+        title: "The Legend of Zelda: Echoes of Wisdom",
+        platform: "Switch 2",
+        genre: "Aventura / Puzles",
+        year: "2024",
+        price: 1299,
+        imagen: "img/tloz.jpg",
+        color: "#1e6b43",
+        descripcion: "Con Link desaparecido, controla a la princesa Zelda y utiliza el poder de las réplicas junto al hada Tri para duplicar objetos, resolver acertijos y rescatar Hyrule."
+      },
+      {
+        id: 3,
+        title: "Monster Hunter Wilds",
+        platform: "PC",
+        genre: "RPG de Acción",
+        year: "2025",
+        price: 1399,
+        imagen: "img/mhw.jpg",
+        color: "#8c4a19",
+        descripcion: "Adéntrate en las Tierras Prohibidas para cazar monstruos gigantes en ecosistemas dinámicos con clima cambiante, 14 tipos de armas y modo cooperativo en línea."
+      },
+      {
+        id: 4,
+        title: "Metroid Prime 4: Beyond",
+        platform: "Switch 2",
+        genre: "Aventura / Disparos",
+        year: "2025",
+        price: 1299,
+        imagen: "img/m4.jpg",
+        color: "#1a4b78",
+        descripcion: "Samus Aran regresa en una nueva misión espacial en primera persona enfrentando a Sylux en un planeta alienígena lleno de ruinas antiguas y secretos por escanear."
+      },
+      {
+        id: 5,
+        title: "DOOM: The Dark Ages",
+        platform: "PC",
+        genre: "Acción / FPS",
+        year: "2025",
+        price: 1399,
+        imagen: "img/dtdoa.jpg",
+        color: "#7c1d1d",
+        descripcion: "Precuela medieval del DOOM Slayer con nuevas armas brutales, combate directo con la sierra escudo y una guerra oscura contra las hordas del infierno."
+      },
+      {
+        id: 6,
+        title: "Death Stranding 2: On the Beach",
+        platform: "PS5",
+        genre: "Aventura / Acción",
+        year: "2025",
+        price: 1499,
+        imagen: "img/ds.jpg",
+        color: "#2c3e50",
+        descripcion: "Sam Bridges y Fragile emprenden un nuevo viaje más allá de las ciudades conectadas enfrentando amenazas sobrenaturales para salvar a la humanidad de la extinción."
+      },
+      {
+        id: 7,
+        title: "Silent Hill 2 Remake",
+        platform: "PS5",
+        genre: "Terror Psicológico",
+        year: "2024",
+        price: 1299,
+        imagen: "img/sh2.jpg",
+        color: "#3d4849",
+        descripcion: "Regresa al pueblo cubierto de niebla junto a James Sunderland en esta reconstrucción moderna del clásico de terror psicológico tras recibir una carta de su esposa."
+      },
+      {
+        id: 8,
+        title: "Elden Ring: Shadow of the Erdtree",
+        platform: "PC",
+        genre: "RPG / Fantasía Oscura",
+        year: "2024",
+        price: 899,
+        imagen: "img/er.jpg",
+        color: "#6b541c",
+        descripcion: "Expansión masiva que te lleva a la Tierra Sombría siguiendo los pasos de Miquella, con nuevas mazmorras, jefes desafiantes, armas inéditas y secretos profundos."
+      },
+      {
+        id: 9,
+        title: "Dragon Ball: Sparking! ZERO",
+        platform: "PS5",
+        genre: "Lucha / Anime",
+        year: "2024",
+        price: 1349,
+        imagen: "img/dbs.jpg",
+        color: "#b35900",
+        descripcion: "Combates destructivos a alta velocidad en arenas 3D con transformaciones en tiempo real y más de 180 personajes jugables de toda la saga Dragon Ball."
+      },
+      {
+        id: 10,
+        title: "Resident Evil 4 Remake",
+        platform: "PC",
+        genre: "Terror / Acción",
+        year: "2023",
+        price: 799,
+        imagen: "img/re4.jpg",
+        color: "#4a2323",
+        descripcion: "Acompaña al agente Leon S. Kennedy en su misión de rescate en un aislado pueblo europeo lleno de peligros en esta reimaginación del clásico survival horror."
+      }
+    ];
+
+    // Variables de estado
+    let currentPlatform = "Todos";
+    let cart = [];
+
+    // Formatear precio en pesos mexicanos
+    function formatPrice(value) {
+      return "$" + value.toLocaleString("es-MX") + " MXN";
+    }
+
+    // Dibujar los cuadros de videojuegos en la página
+    function renderGames(list) {
+      const grid = document.getElementById("gamesGrid");
+      const emptyMsg = document.getElementById("emptyMessage");
+      const counter = document.getElementById("gamesCounter");
+
+      counter.textContent = "Mostrando " + list.length + (list.length === 1 ? " juego" : " juegos");
+
+      if (list.length === 0) {
+        grid.innerHTML = "";
+        emptyMsg.style.display = "block";
+        return;
+      }
+
+      emptyMsg.style.display = "none";
+
+      grid.innerHTML = list
+        .map(function (game) {
+          return `
+            <div class="game-card">
+              <div>
+                <div class="game-cover" style="background-color: ${game.color};" onclick="openDetailsModal(${game.id})">
+                  <img src="${game.imagen}" alt="${game.title}" onerror="this.style.display='none'" />
+                  <span class="cover-platform">${game.platform}</span>
+                </div>
+                <div class="game-body">
+                  <div class="game-title">${game.title}</div>
+                  <p class="game-desc">${game.descripcion}</p>
+                </div>
+              </div>
+              <div class="game-footer">
+                <div class="game-price">${formatPrice(game.price)}</div>
+                <div class="card-buttons">
+                  <button class="btn btn-details" onclick="openDetailsModal(${game.id})">Ver más</button>
+                  <button class="btn btn-add" onclick="addToCart(${game.id})">Agregar</button>
+                </div>
+              </div>
+            </div>
+          `;
+        })
+        .join("");
+    }
+
+    // Filtrar por plataforma y texto de búsqueda
+    function filterGames() {
+      const searchText = document.getElementById("searchInput").value.toLowerCase().trim();
+      const heading = document.getElementById("catalogHeading");
+
+      heading.textContent =
+        currentPlatform === "Todos"
+          ? "Catálogo de Videojuegos"
+          : "Videojuegos para " + currentPlatform;
+
+      const filtered = games.filter(function (game) {
+        const matchPlatform = currentPlatform === "Todos" || game.platform === currentPlatform;
+        const matchText =
+          game.title.toLowerCase().includes(searchText) ||
+          game.descripcion.toLowerCase().includes(searchText);
+        return matchPlatform && matchText;
+      });
+
+      renderGames(filtered);
+    }
+
+    // Cambiar filtro de plataforma activo
+    function setPlatform(platform, btnElement) {
+      currentPlatform = platform;
+      const buttons = document.querySelectorAll(".filter-btn");
+      buttons.forEach(function (btn) {
+        btn.classList.remove("active");
+      });
+      btnElement.classList.add("active");
+      filterGames();
+    }
+
+    // Restablecer búsqueda y filtros
+    function resetCatalog() {
+      document.getElementById("searchInput").value = "";
+      currentPlatform = "Todos";
+      const buttons = document.querySelectorAll(".filter-btn");
+      buttons.forEach(function (btn, index) {
+        btn.classList.toggle("active", index === 0);
+      });
+      filterGames();
+    }
+
+    // =========================================
+    // FUNCIONES PARA VENTANAS (MODALES)
+    // =========================================
+    function openModal(id) {
+      document.getElementById(id).classList.add("open");
+    }
+
+    function closeModal(id) {
+      document.getElementById(id).classList.remove("open");
+    }
+
+    function closeOnOverlay(event, id) {
+      if (event.target.id === id) {
+        closeModal(id);
+      }
+    }
+
+    // Abrir ventana con ficha completa del videojuego
+    function openDetailsModal(gameId) {
+      const game = games.find(function (g) {
+        return g.id === gameId;
+      });
+      if (!game) return;
+
+      document.getElementById("detailModalTitle").textContent = game.title;
+      document.getElementById("detailModalBody").innerHTML = `
+        <div style="background-color: ${game.color}; border-radius: 4px; overflow: hidden; margin-bottom: 14px; border: 1px solid #cccccc;">
+          <img src="${game.imagen}" alt="${game.title}" style="width: 100%; height: 210px; object-fit: cover; display: block;" onerror="this.style.display='none'" />
+        </div>
+        <p style="margin-bottom: 12px;">${game.descripcion}</p>
+        <table class="detail-table">
+          <tr>
+            <td>Plataforma</td>
+            <td>${game.platform}</td>
+          </tr>
+          <tr>
+            <td>Género</td>
+            <td>${game.genre}</td>
+          </tr>
+          <tr>
+            <td>Año</td>
+            <td>${game.year}</td>
+          </tr>
+          <tr>
+            <td>Precio</td>
+            <td><strong>${formatPrice(game.price)}</strong></td>
+          </tr>
+        </table>
+      `;
+
+      const addBtn = document.getElementById("detailAddBtn");
+      addBtn.onclick = function () {
+        addToCart(game.id);
+        closeModal("detailsModal");
+      };
+
+      openModal("detailsModal");
+    }
+
+    // =========================================
+    // FUNCIONES DEL CARRITO DE COMPRAS
+    // =========================================
+    function addToCart(gameId) {
+      const game = games.find(function (g) {
+        return g.id === gameId;
+      });
+      if (!game) return;
+
+      const existing = cart.find(function (item) {
+        return item.id === gameId;
+      });
+
+      if (existing) {
+        existing.qty += 1;
+      } else {
+        cart.push({
+          id: game.id,
+          title: game.title,
+          platform: game.platform,
+          price: game.price,
+          qty: 1
+        });
+      }
+
+      updateCartCounter();
+      showAlert('Se agregó "' + game.title + '" al carrito.');
+    }
+
+    function removeFromCart(gameId) {
+      cart = cart.filter(function (item) {
+        return item.id !== gameId;
+      });
+      updateCartCounter();
+      renderCartModal();
+    }
+
+    function updateCartCounter() {
+      const totalItems = cart.reduce(function (sum, item) {
+        return sum + item.qty;
+      }, 0);
+      document.getElementById("cartCount").textContent = totalItems;
+    }
+
+    function openCartModal() {
+      renderCartModal();
+      openModal("cartModal");
+    }
+
+    function renderCartModal() {
+      const container = document.getElementById("cartItemsContainer");
+      const totalBox = document.getElementById("cartTotalBox");
+      const checkoutBtn = document.getElementById("checkoutBtn");
+
+      if (cart.length === 0) {
+        container.innerHTML = "<p>Tu carrito está vacío. Agrega algún juego del catálogo.</p>";
+        totalBox.textContent = "Total a pagar: $0 MXN";
+        checkoutBtn.style.display = "none";
+        return;
+      }
+
+      checkoutBtn.style.display = "inline-block";
+      let total = 0;
+
+      container.innerHTML = cart
+        .map(function (item) {
+          const subtotal = item.price * item.qty;
+          total += subtotal;
+          return `
+            <div class="cart-item">
+              <div>
+                <strong>${item.title}</strong> (${item.platform})<br />
+                <small>Cantidad: ${item.qty} x ${formatPrice(item.price)} = <strong>${formatPrice(subtotal)}</strong></small>
+              </div>
+              <button class="btn-remove" onclick="removeFromCart(${item.id})">Quitar</button>
+            </div>
+          `;
+        })
+        .join("");
+
+      totalBox.textContent = "Total a pagar: " + formatPrice(total);
+    }
+
+    function finishPurchase() {
+      if (cart.length === 0) return;
+      cart = [];
+      updateCartCounter();
+      closeModal("cartModal");
+      showAlert("¡Gracias por tu compra en buscajuegos.com! Tu pedido ha sido confirmado.");
+    }
+
+    // Mostrar aviso temporal en la parte superior del catálogo
+    function showAlert(message) {
+      const alertBox = document.getElementById("statusAlert");
+      alertBox.textContent = message;
+      alertBox.style.display = "block";
+      setTimeout(function () {
+        alertBox.style.display = "none";
+      }, 3500);
+    }
+
+    // Formularios de Inicio de Sesión y Contacto
+    function handleLogin(event) {
+      event.preventDefault();
+      const user = document.getElementById("usernameInput").value.trim();
+      if (user) {
+        document.getElementById("loginBtn").textContent = "Usuario: " + user;
+        closeModal("loginModal");
+        showAlert("Sesión iniciada como " + user + ".");
+      }
+    }
+
+    function handleContact(event) {
+      event.preventDefault();
+      document.getElementById("contactEmail").value = "";
+      document.getElementById("contactMsg").value = "";
+      closeModal("contactModal");
+      showAlert("Mensaje enviado. Nuestro equipo responderá pronto.");
+    }
+
+    // Cargar todos los juegos al iniciar la página
+    window.onload = function () {
+      renderGames(games);
+    };
+  </script>
+</body>
+</html>
